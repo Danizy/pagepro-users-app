@@ -36,9 +36,9 @@ const UserListItem: React.FC<UserListItemProps> = ({
 }) => (
   <ItemContainer>
     <h2>{header}</h2>
-    <a href="#">{email}</a>
-    <a href="#">{phone}</a>
-    <a href="#">{site}</a>
+    <span>{email}</span>
+    <span>{phone}</span>
+    <span>{site}</span>
     <FlexParagraph>{content}</FlexParagraph>
     <Button onClick={(): void => console.log('aje')}>
       <h2>{buttonText}</h2>

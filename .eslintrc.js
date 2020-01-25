@@ -15,7 +15,8 @@ module.exports = {
   },
   rules: {
     "@typescript-eslint/explicit-function-return-type": "error",
-    "react/prop-types": 0
+    "react/prop-types": 0,
+    "@typescript-eslint/interface-name-prefix": 0
   },
   settings: {
     react: {
