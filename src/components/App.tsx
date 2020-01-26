@@ -1,31 +1,25 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import UserListItem from './UserListItem'
-import { getUsers } from '../actions/users-actions'
-import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from '../store'
-import { IUser } from '../models/user'
+import { Switch, Route } from 'react-router-dom'
+import UserList from './UserList'
+import UserDetails from './UserDetails'
 
 const MainWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  padding-top: 100px;
+  max-width: 1700px;
+  margin: 0 auto;
 `
 
 const App: React.FC = () => {
-  const dispatch = useDispatch()
-  useEffect(() => {
-    dispatch(getUsers())
-  }, [dispatch])
-  const users = useSelector<RootState, IUser[]>(
-    state => state.usersReducer.users
-  )
-
   return (
     <MainWrapper>
-      {users.map(user => (
-        <UserListItem key={user.id}></UserListItem>
-      ))}
+      <Switch>
+        <Route path="/users/:userId">
+          <UserDetails />
+        </Route>
+        <Route path="/">
+          <UserList />
+        </Route>
+      </Switch>
     </MainWrapper>
   )
 }

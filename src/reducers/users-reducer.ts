@@ -4,18 +4,21 @@ import {
   GET_USERS,
   GET_USERS_FINISHED,
   GET_USERS_FAILED,
+  SELECT_USER,
 } from '../actions/users-types'
 
 export interface IUsersState {
   readonly users: User[]
   readonly isLoading: boolean
   readonly error: boolean
+  readonly selectedUser: User | null
 }
 
 const initialState: IUsersState = {
   users: [],
   isLoading: false,
   error: false,
+  selectedUser: null,
 }
 
 const usersReducer = (
@@ -29,6 +32,8 @@ const usersReducer = (
       return { ...state, isLoading: false, users: action.payload }
     case GET_USERS_FAILED:
       return { ...state, isLoading: false, error: true }
+    case SELECT_USER:
+      return { ...state, selectedUser: action.payload }
     default:
       return state
   }

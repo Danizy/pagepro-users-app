@@ -3,8 +3,9 @@ import {
   GET_USERS,
   GET_USERS_FINISHED,
   GET_USERS_FAILED,
+  SELECT_USER,
 } from './users-types'
-import { User } from '../models/user'
+import { User, IUser } from '../models/user'
 import { Dispatch } from 'redux'
 import { ThunkAction } from 'redux-thunk'
 import { fetchUsers } from '../services/users-service'
@@ -35,3 +36,8 @@ export const getUsers = (): ThunkAction<
     }
   }
 }
+
+export const selectUser = (user: IUser): UsersActionTypes => ({
+  type: SELECT_USER,
+  payload: user,
+})
