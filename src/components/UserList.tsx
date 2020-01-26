@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../store'
 import { IUser } from '../models/user'
 import styled from 'styled-components'
+import LoadingIndicator from './LoadingIndicator'
 
 const MainWrapper = styled.div`
   display: flex;
@@ -14,24 +15,22 @@ const MainWrapper = styled.div`
 
 const UserList: React.FC = () => {
   const dispatch = useDispatch()
-  useEffect(() => {
-    dispatch(getUsers())
-  }, [dispatch])
   const users = useSelector<RootState, IUser[]>(
     state => state.usersReducer.users
   )
-
-  return (
-    <MainWrapper>
-      {users.map(user => (
-        <UserListItem
-          key={user.id}
-          user={user}
-          buttonText="Details"
-        ></UserListItem>
-      ))}
-    </MainWrapper>
+  const usersLoading = useSelector<RootState, boolean>(
+    state => state.usersReducer.isLoading
   )
+
+  useEffect(() => {
+    dispatch(getUsers())
+  }, [dispatch])
+
+  const list = users.map(user => (
+    <UserListItem key={user.id} user={user} buttonText="Details"></UserListItem>
+  ))
+
+  return <MainWrapper>{usersLoading ? <LoadingIndicator /> : list}</MainWrapper>
 }
 
 export default UserList
