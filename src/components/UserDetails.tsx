@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '../store'
 import { IUser } from '../models/user'
 import { selectUser } from '../actions/users-actions'
+import PostList from './PostList'
 
 interface RouteParams {
   userId: string
@@ -26,6 +27,7 @@ const UserDetails: React.FC = () => {
       <UserHeader />
       <div>
         <p>Dziwko {userId}</p>
+        <PostList />
       </div>
     </div>
   )

@@ -38,8 +38,13 @@ const StyledLink = styled(Link)`
   color: 'black';
   padding: 0.5em 1em;
   align-self: stretch;
+  text-align: center;
+  text-decoration: none;
   box-shadow: 5px 5px 0px 0px rgba(0, 0, 0, 0.75);
 
+  &:visited {
+    color: black;
+  }
   &:hover {
     cursor: pointer;
   }
