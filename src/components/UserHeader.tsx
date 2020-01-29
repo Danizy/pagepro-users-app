@@ -10,6 +10,7 @@ const HeaderContainer = styled.div`
   height: 100px;
   display: flex;
   align-items: center;
+  margin-bottom: 50px;
 `
 
 const UserNameContainer = styled.div`
@@ -22,7 +23,11 @@ const UserNameContainer = styled.div`
   font-weight: bold;
 `
 
-const UserHeader: React.FC = () => {
+type UserHeaderPropr = {
+  onAddClick: () => void
+}
+
+const UserHeader: React.FC<UserHeaderPropr> = ({ onAddClick }) => {
   const userName = useSelector<RootState, string | undefined>(
     state => state.usersReducer.selectedUser?.name
   )
@@ -30,7 +35,7 @@ const UserHeader: React.FC = () => {
     <HeaderContainer>
       <BackButton></BackButton>
       <UserNameContainer>{userName}</UserNameContainer>
-      <AddButton onClick={(): void => console.log('opa')} />
+      <AddButton onClick={onAddClick} />
     </HeaderContainer>
   )
 }

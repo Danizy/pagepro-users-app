@@ -30,7 +30,7 @@ const PostList: React.FC = () => {
   }, [dispatch, userId])
 
   const list = posts.map(post => (
-    <PostListElement key={post.id} postTitle={post.title} />
+    <PostListElement key={post.id} postTitle={post.title} postId={post.id} />
   ))
 
   return (

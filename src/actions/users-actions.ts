@@ -3,12 +3,14 @@ import {
   GET_USERS,
   GET_USERS_FINISHED,
   GET_USERS_FAILED,
-  SELECT_USER,
+  GET_USER,
+  GET_USER_FINISHED,
+  GET_USER_FAILED,
 } from './users-types'
-import { User, IUser } from '../models/user'
+import { User } from '../models/user'
 import { Dispatch } from 'redux'
 import { ThunkAction } from 'redux-thunk'
-import { fetchUsers } from '../services/users-service'
+import { fetchUsers, fetchUser } from '../services/users-service'
 import { IUsersState } from '../reducers/users-reducer'
 
 const getUsersFinished = (users: User[]): UsersActionTypes => ({
@@ -37,7 +39,25 @@ export const getUsers = (): ThunkAction<
   }
 }
 
-export const selectUser = (user: IUser): UsersActionTypes => ({
-  type: SELECT_USER,
+const getUserFinished = (user: User): UsersActionTypes => ({
+  type: GET_USER_FINISHED,
   payload: user,
 })
+
+const getUserFailed = (): UsersActionTypes => ({
+  type: GET_USER_FAILED,
+})
+
+export const getUser = (
+  userId: number
+): ThunkAction<void, IUsersState, null, UsersActionTypes> => {
+  return async (dispatch: Dispatch): Promise<void> => {
+    dispatch({ type: GET_USER })
+    try {
+      const user = await fetchUser(userId)
+      dispatch(getUserFinished(user))
+    } catch (error) {
+      getUserFailed()
+    }
+  }
+}

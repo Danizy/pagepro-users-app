@@ -4,7 +4,9 @@ import {
   GET_USERS,
   GET_USERS_FINISHED,
   GET_USERS_FAILED,
-  SELECT_USER,
+  GET_USER,
+  GET_USER_FAILED,
+  GET_USER_FINISHED,
 } from '../actions/users-types'
 
 export interface IUsersState {
@@ -27,12 +29,14 @@ const usersReducer = (
 ): IUsersState => {
   switch (action.type) {
     case GET_USERS:
+    case GET_USER:
       return { ...state, isLoading: true, error: false }
     case GET_USERS_FINISHED:
       return { ...state, isLoading: false, users: action.payload }
     case GET_USERS_FAILED:
+    case GET_USER_FAILED:
       return { ...state, isLoading: false, error: true }
-    case SELECT_USER:
+    case GET_USER_FINISHED:
       return { ...state, selectedUser: action.payload }
     default:
       return state

@@ -1,11 +1,14 @@
-import React, { useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { useParams, useRouteMatch, Switch, Route } from 'react-router-dom'
 import UserHeader from './UserHeader'
-import { useSelector, useDispatch } from 'react-redux'
-import { RootState } from '../store'
-import { IUser } from '../models/user'
-import { selectUser } from '../actions/users-actions'
+import { useDispatch, useSelector } from 'react-redux'
+import { getUser } from '../actions/users-actions'
 import PostList from './PostList'
+import AddPostModal from './AddPostModal'
+import { addPost } from '../actions/posts-actions'
+import { RootState } from '../store'
+import ModalWrapper from './ModalWrapper'
+import PostDetails from './PostDetails'
 
 interface RouteParams {
   userId: string
@@ -13,21 +16,48 @@ interface RouteParams {
 
 const UserDetails: React.FC = () => {
   const { userId } = useParams<RouteParams>()
-  const user = useSelector<RootState, IUser | undefined>(state =>
-    state.usersReducer.users.find(user => user.id === +userId)
-  )
   const dispatch = useDispatch()
+  const [addPostModalVisible, setAddPostModalVisible] = useState(false)
+  const match = useRouteMatch()
+
+  const toggleShowModal = (): void => setAddPostModalVisible(state => !state)
+
+  const handleModalSaveClick = (postTitle: string, postBody: string): void => {
+    toggleShowModal()
+    dispatch(addPost(postTitle, postBody))
+  }
+
+  const isPostAdding = useSelector<RootState, boolean | null>(
+    state => state.postsReducer.isPostAdding
+  )
 
   useEffect(() => {
-    if (user !== undefined) dispatch(selectUser(user))
-  }, [userId, user, dispatch])
+    dispatch(getUser(+userId))
+  }, [userId, dispatch])
 
   return (
     <div>
-      <UserHeader />
+      <UserHeader onAddClick={toggleShowModal} />
       <div>
-        <p>Dziwko {userId}</p>
-        <PostList />
+        <Switch>
+          <Route path={`${match.path}/:postId`}>
+            <PostDetails />
+          </Route>
+          <Route path={`${match.path}/`}>
+            <PostList />
+          </Route>
+        </Switch>
+        {addPostModalVisible && (
+          <AddPostModal
+            onCancel={toggleShowModal}
+            onSave={handleModalSaveClick}
+          />
+        )}
+        {isPostAdding && (
+          <ModalWrapper modalTitle="Loading">
+            <h2>Post is beeing added</h2>
+          </ModalWrapper>
+        )}
       </div>
     </div>
   )
