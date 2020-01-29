@@ -29,7 +29,7 @@ const CommentList: React.FC = () => {
   )
 
   useEffect(() => {
-    dispatch(getComments(+postId))
+    if (comments.length === 0) dispatch(getComments(+postId))
   }, [dispatch, postId])
 
   const list = comments.map(comment => (

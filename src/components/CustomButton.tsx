@@ -22,11 +22,10 @@ type AddButtonProps = {
   onClick(e: React.MouseEvent<HTMLElement>): void
 }
 
-const AddButton: React.FC<AddButtonProps> = props => (
+const CustomButton: React.FC<AddButtonProps> = props => (
   <StyledButton {...props}>
-    {props.children}
-    <AddButtonContent>+</AddButtonContent>
+    <AddButtonContent>{props.children}</AddButtonContent>
   </StyledButton>
 )
 
-export default AddButton
+export default CustomButton

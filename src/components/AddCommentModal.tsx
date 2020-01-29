@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import ModalWrapper from './ModalWrapper'
 import Button from './Button'
+import regexes from '../constants/regex'
 
 const AddPostWrapper = styled.div`
   padding: 0px 30px;
@@ -55,16 +56,21 @@ const StyledButton = styled(Button)`
 
 type AddPostModalProps = {
   onCancel: () => void
-  onSave: (title: string, body: string) => void
+  onSave: (title: string, email: string, body: string) => void
 }
 
-const AddPostModal: React.FC<AddPostModalProps> = ({ onCancel, onSave }) => {
+const AddCommentModal: React.FC<AddPostModalProps> = ({ onCancel, onSave }) => {
   const [titleText, setTitleText] = useState('')
+  const [emailText, setEmailText] = useState('')
   const [bodyText, setBodyText] = useState('')
 
   const handleTitleTextChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ): void => setTitleText(event.target.value)
+
+  const handleEmailTextChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => setEmailText(event.target.value)
 
   const handleBodyTextChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
@@ -75,12 +81,16 @@ const AddPostModal: React.FC<AddPostModalProps> = ({ onCancel, onSave }) => {
       window.alert('Podaj tytuł')
       return
     }
+    if (!emailText.match(regexes.emailRegex)) {
+      window.alert('Podaj prawidłowy adres email')
+      return
+    }
     if (bodyText.trim() === '') {
       window.alert('Podaj treść')
       return
     }
 
-    onSave(titleText, bodyText)
+    onSave(titleText, emailText, bodyText)
   }
 
   return (
@@ -90,6 +100,10 @@ const AddPostModal: React.FC<AddPostModalProps> = ({ onCancel, onSave }) => {
         <TitleLabel>
           <LabelText>Title</LabelText>{' '}
           <StyledInput value={titleText} onChange={handleTitleTextChange} />
+        </TitleLabel>
+        <TitleLabel>
+          <LabelText>Email</LabelText>{' '}
+          <StyledInput value={emailText} onChange={handleEmailTextChange} />
         </TitleLabel>
         <BodyLabel>
           <LabelText>Body</LabelText>{' '}
@@ -106,4 +120,4 @@ const AddPostModal: React.FC<AddPostModalProps> = ({ onCancel, onSave }) => {
   )
 }
 
-export default AddPostModal
+export default AddCommentModal

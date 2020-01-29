@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getUser } from '../actions/users-actions'
 import PostList from './PostList'
 import AddPostModal from './AddPostModal'
-import { addPost } from '../actions/posts-actions'
+import { addPost, deletePost } from '../actions/posts-actions'
 import { RootState } from '../store'
 import ModalWrapper from './ModalWrapper'
 import PostDetails from './PostDetails'
@@ -31,13 +31,28 @@ const UserDetails: React.FC = () => {
     state => state.postsReducer.isPostAdding
   )
 
+  const previousUserId = useSelector<RootState, number | undefined>(
+    state => state.usersReducer.selectedUser?.id
+  )
+
+  const postId = useSelector<RootState, number | undefined>(
+    state => state.postsReducer.selectedPost?.id
+  )
+
+  const handleRomovePostClick = (): void => {
+    if (postId !== undefined) dispatch(deletePost(postId))
+  }
+
   useEffect(() => {
     dispatch(getUser(+userId))
-  }, [userId, dispatch])
+  }, [userId, dispatch, previousUserId])
 
   return (
     <div>
-      <UserHeader onAddClick={toggleShowModal} />
+      <UserHeader
+        onAddClick={toggleShowModal}
+        onRemoveClick={handleRomovePostClick}
+      />
       <div>
         <Switch>
           <Route path={`${match.path}/:postId`}>

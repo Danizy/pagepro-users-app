@@ -3,7 +3,8 @@ import styled from 'styled-components'
 import BackButton from './BackButton'
 import { useSelector } from 'react-redux'
 import { RootState } from '../store'
-import AddButton from './AddButton'
+import CustomButton from './CustomButton'
+import { Route, Switch } from 'react-router-dom'
 
 const HeaderContainer = styled.div`
   padding-top: 20px;
@@ -25,9 +26,13 @@ const UserNameContainer = styled.div`
 
 type UserHeaderPropr = {
   onAddClick: () => void
+  onRemoveClick: () => void
 }
 
-const UserHeader: React.FC<UserHeaderPropr> = ({ onAddClick }) => {
+const UserHeader: React.FC<UserHeaderPropr> = ({
+  onAddClick,
+  onRemoveClick,
+}) => {
   const userName = useSelector<RootState, string | undefined>(
     state => state.usersReducer.selectedUser?.name
   )
@@ -35,7 +40,14 @@ const UserHeader: React.FC<UserHeaderPropr> = ({ onAddClick }) => {
     <HeaderContainer>
       <BackButton></BackButton>
       <UserNameContainer>{userName}</UserNameContainer>
-      <AddButton onClick={onAddClick} />
+      <Switch>
+        <Route exact path={'/users/:userId'}>
+          <CustomButton onClick={onAddClick}>+</CustomButton>
+        </Route>
+        <Route exact path={'/users/:userId/:postId'}>
+          <CustomButton onClick={onRemoveClick}>-</CustomButton>
+        </Route>
+      </Switch>
     </HeaderContainer>
   )
 }
