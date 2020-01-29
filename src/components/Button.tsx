@@ -1,15 +1,16 @@
 import React from 'react'
 import styled from 'styled-components'
+import mainTheme from '../constants/theme'
 
 const StyledButton = styled.button`
   background: ${(props: ButtonProps): string =>
-    props.secondary ? '#075394' : 'white'};
-  border: 2px solid black;
+    props.secondary ? mainTheme.secondaryColor : 'white'};
+  border: ${mainTheme.borderThin};
   color: ${(props: ButtonProps): string =>
     props.secondary ? 'white' : 'black'};
   padding: 0.5em 1em;
   align-self: stretch;
-  box-shadow: 5px 5px 0px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: ${mainTheme.shadow};
 
   &:hover {
     cursor: pointer;

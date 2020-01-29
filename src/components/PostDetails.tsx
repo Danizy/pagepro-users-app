@@ -7,12 +7,8 @@ import { RootState } from '../store'
 import { IPost } from '../models/post'
 import CommentList from './CommentList'
 import AddCommentModal from './AddCommentModal'
-import { addComment } from '../actions/comments-actions'
-
-const PostDetailsWrapper = styled.div`
-  max-width: 1700px;
-  margin: 0 auto;
-`
+import { addComment, clearComments } from '../actions/comments-actions'
+import mainTheme from '../constants/theme'
 
 const ButtonsContainer = styled.div`
   display: flex;
@@ -22,7 +18,7 @@ const ButtonsContainer = styled.div`
 const HideCommentsButton = styled.button`
   background: transparent;
   border: none;
-  color: #075394;
+  color: ${mainTheme.secondaryColor};
   text-decoration: underline;
 `
 
@@ -30,7 +26,7 @@ const AddCommentButton = styled.button`
   margin-left: auto;
   background: transparent;
   border: none;
-  color: #075394;
+  color: ${mainTheme.secondaryColor};
   text-decoration: underline;
 `
 
@@ -42,10 +38,11 @@ interface RouteParams {
 const PostDetails: React.FC = () => {
   const { postId, userId } = useParams<RouteParams>()
   const dispatch = useDispatch()
+  const wasDeleted = useRef(false)
+
   const [commentsVisible, setCommentsVisible] = useState(false)
   const [addCommentVisible, setAddCommentVisible] = useState(false)
   const [redirect, setRedirect] = useState(false)
-  const wasDeleted = useRef(false)
 
   const post = useSelector<RootState, IPost | null>(
     state => state.postsReducer.selectedPost
@@ -57,9 +54,12 @@ const PostDetails: React.FC = () => {
 
   useEffect(() => {
     if (wasDeleted.current) setRedirect(true)
-    dispatch(getPost(+postId))
+    if (!post || post.id !== +postId) {
+      dispatch(getPost(+postId))
+      dispatch(clearComments())
+    }
     if (isPostDeleting !== null) wasDeleted.current = true
-  }, [dispatch, postId, isPostDeleting])
+  }, [dispatch, postId, isPostDeleting, post])
 
   const toggleAddComment = (): void => setAddCommentVisible(state => !state)
 
@@ -82,7 +82,7 @@ const PostDetails: React.FC = () => {
   )
 
   return (
-    <PostDetailsWrapper>
+    <div>
       {post && post.id === +postId ? postContainer : 'Loading'}
       <ButtonsContainer>
         <HideCommentsButton onClick={toggleCommentsVisible}>
@@ -100,7 +100,7 @@ const PostDetails: React.FC = () => {
         />
       )}
       {redirect && <Redirect to={`/users/${userId}`} />}
-    </PostDetailsWrapper>
+    </div>
   )
 }
 

@@ -1,9 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
+import mainTheme from '../constants/theme'
 
 const CommentListElementWrapper = styled.div`
   margin-bottom: 20px;
-  border: solid black 3px;
+  border: ${mainTheme.border};
   display: flex;
   flex-direction: column;
   padding: 10px;
@@ -19,7 +20,8 @@ const CommentTitle = styled.span`
 
 const AuthorEmail = styled.span`
   margin-left: auto;
-  color: #075394;
+  color: ${mainTheme.secondaryColor};
+  text-decoration: underline;
 `
 
 type CommentListElementProps = {

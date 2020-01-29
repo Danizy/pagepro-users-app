@@ -65,6 +65,6 @@ export const addComment = (
   }
 }
 
-export const clearComments = {
+export const clearComments = (): CommentsActionsTypes => ({
   type: CLEAR_COMMENTS,
-}
+})

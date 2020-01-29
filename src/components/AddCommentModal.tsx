@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import ModalWrapper from './ModalWrapper'
 import Button from './Button'
 import regexes from '../constants/regex'
+import mainTheme from '../constants/theme'
 
 const AddPostWrapper = styled.div`
   padding: 0px 30px;
@@ -17,7 +18,7 @@ const AddPostTitle = styled.h1`
 
 const StyledInput = styled.input`
   flex: 1;
-  border: 3px solid black;
+  border: ${mainTheme.border};
 `
 
 const LabelText = styled.span`
@@ -39,7 +40,7 @@ const BodyLabel = styled.div`
 const StyledTextarea = styled.textarea`
   flex: 1;
   height: 100%;
-  border: 3px solid black;
+  border: ${mainTheme.border};
 `
 
 const ButtonContainer = styled.div`
@@ -78,15 +79,15 @@ const AddCommentModal: React.FC<AddPostModalProps> = ({ onCancel, onSave }) => {
 
   const handleSaveClicl = (): void => {
     if (titleText.trim() === '') {
-      window.alert('Podaj tytuł')
+      window.alert('Please enter a title')
       return
     }
     if (!emailText.match(regexes.emailRegex)) {
-      window.alert('Podaj prawidłowy adres email')
+      window.alert('Please enter email')
       return
     }
     if (bodyText.trim() === '') {
-      window.alert('Podaj treść')
+      window.alert('Please add body')
       return
     }
 

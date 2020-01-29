@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import mainTheme from '../constants/theme'
 
 const ModalWrapperStyles = styled.div`
   margin: 0 auto;
@@ -18,14 +19,14 @@ const ModalWrapperStyles = styled.div`
 const ModalContainer = styled.div`
   background-color: white;
   width: 500px;
-  border: 3px solid black;
+  border: ${mainTheme.border};
   display: flex;
   flex-direction: column;
 `
 
 const ModalHeader = styled.div`
   display: block;
-  border-bottom: 3px solid black;
+  border-bottom: ${mainTheme.border};
   padding: 5px 10px;
 `
 
@@ -35,7 +36,7 @@ const ModalContent = styled.div`
 
 const ModalFooter = styled.div`
   height: 20px;
-  border-top: 3px solid black;
+  border-top: ${mainTheme.border};
 `
 
 type ModalProps = {

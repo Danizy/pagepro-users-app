@@ -1,9 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
+import mainTheme from '../constants/theme'
 
 const StyledButton = styled.button`
-  background-color: #075394;
-  border: 2px solid black;
+  background-color: ${mainTheme.secondaryColor};
+  border: ${mainTheme.borderThin};
   color: white;
   height: 60px;
   width: 60px;

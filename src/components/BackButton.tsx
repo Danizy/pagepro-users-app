@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
+import mainTheme from '../constants/theme'
 
 const BackButtonContainer = styled.button`
   background: none;
@@ -9,7 +10,7 @@ const BackButtonContainer = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #075394;
+  color: ${mainTheme.secondaryColor};
 
   &:hover {
     cursor: pointer;
@@ -17,13 +18,14 @@ const BackButtonContainer = styled.button`
 `
 
 const BackArrow = styled.span`
-  font-size: 100px;
-  line-height: 100px;
-  padding-bottom: 15px;
+  font-size: 90px;
+  line-height: 90px;
 `
 
 const BackText = styled.span`
   font-size: 25px;
+  height: 100%;
+  margin-top: 10px;
 `
 
 const BackButton: React.FC<RouteComponentProps> = ({ history }) => {

@@ -17,15 +17,8 @@ interface RouteParams {
 const UserDetails: React.FC = () => {
   const { userId } = useParams<RouteParams>()
   const dispatch = useDispatch()
-  const [addPostModalVisible, setAddPostModalVisible] = useState(false)
   const match = useRouteMatch()
-
-  const toggleShowModal = (): void => setAddPostModalVisible(state => !state)
-
-  const handleModalSaveClick = (postTitle: string, postBody: string): void => {
-    toggleShowModal()
-    dispatch(addPost(postTitle, postBody))
-  }
+  const [addPostModalVisible, setAddPostModalVisible] = useState(false)
 
   const isPostAdding = useSelector<RootState, boolean | null>(
     state => state.postsReducer.isPostAdding
@@ -46,6 +39,13 @@ const UserDetails: React.FC = () => {
   useEffect(() => {
     dispatch(getUser(+userId))
   }, [userId, dispatch, previousUserId])
+
+  const toggleShowModal = (): void => setAddPostModalVisible(state => !state)
+
+  const handleModalSaveClick = (postTitle: string, postBody: string): void => {
+    toggleShowModal()
+    dispatch(addPost(postTitle, postBody))
+  }
 
   return (
     <div>

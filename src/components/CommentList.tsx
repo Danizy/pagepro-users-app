@@ -1,16 +1,10 @@
 import React, { useEffect } from 'react'
-import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { getComments } from '../actions/comments-actions'
 import { RootState } from '../store'
 import { IComment } from '../models/comment'
 import CommentlistElement from './CommentListElement'
-
-const CommentListWrapper = styled.div`
-  max-width: 1700px;
-  margin: 0 auto;
-`
 
 interface RouteParams {
   postId: string
@@ -30,7 +24,7 @@ const CommentList: React.FC = () => {
 
   useEffect(() => {
     if (comments.length === 0) dispatch(getComments(+postId))
-  }, [dispatch, postId])
+  }, [dispatch, postId, comments.length])
 
   const list = comments.map(comment => (
     <CommentlistElement
@@ -43,11 +37,7 @@ const CommentList: React.FC = () => {
 
   const loadingIndicator = <h2>Loading</h2>
 
-  return (
-    <CommentListWrapper>
-      {commentsLoading ? loadingIndicator : list}
-    </CommentListWrapper>
-  )
+  return <div>{commentsLoading ? loadingIndicator : list}</div>
 }
 
 export default CommentList

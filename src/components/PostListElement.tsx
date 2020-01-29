@@ -6,11 +6,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { deletePost } from '../actions/posts-actions'
 import { RootState } from '../store'
 import { Link, useRouteMatch } from 'react-router-dom'
+import mainTheme from '../constants/theme'
 
 const PostListItemWrapper = styled.div`
   position: relative;
   display: flex;
-  border: solid black 3px;
+  border: ${mainTheme.border};
   flex: 1;
   align-items: center;
   margin-bottom: 10px;

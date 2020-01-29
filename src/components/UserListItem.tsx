@@ -2,9 +2,10 @@ import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { IUser } from '../models/user'
+import mainTheme from '../constants/theme'
 
 const ItemContainer = styled.div`
-  border: solid black 3px;
+  border: ${mainTheme.border};
   flex-basis: 300px;
   margin: 20px 35px;
   height: 400px;
@@ -34,13 +35,13 @@ const ContactDiv = styled.div`
 
 const StyledLink = styled(Link)`
   background: 'white';
-  border: 2px solid black;
+  border: ${mainTheme.borderThin};
   color: 'black';
   padding: 0.5em 1em;
   align-self: stretch;
   text-align: center;
   text-decoration: none;
-  box-shadow: 5px 5px 0px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: ${mainTheme.shadow};
 
   &:visited {
     color: black;
