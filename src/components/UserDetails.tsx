@@ -87,7 +87,7 @@ const UserDetails: React.FC = () => {
 
   const view = (): ReactNode => {
     if (userLoadingError) return 'No such user'
-    if (userLoading) return 'Loadinge'
+    if (userLoading) return 'Loading'
     return userLoaded
   }
 
