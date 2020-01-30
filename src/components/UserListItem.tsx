@@ -31,6 +31,8 @@ const NoMarginParagraph = styled.p`
 
 const ContactDiv = styled.div`
   margin-bottom: 25px;
+  color: ${mainTheme.secondaryColor};
+  text-decoration: underline;
 `
 
 const StyledLink = styled(Link)`
