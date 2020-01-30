@@ -15,7 +15,7 @@ const ItemContainer = styled.div`
   align-items: flex-start;
 `
 
-const DBlock = styled.div`
+const DBlock = styled.a`
   display: block;
 `
 
@@ -65,9 +65,9 @@ const UserListItem: React.FC<UserListItemProps> = ({ user, buttonText }) => {
     <ItemContainer>
       <h2>{name}</h2>
       <ContactDiv>
-        <DBlock>{email}</DBlock>
-        <DBlock>{phone}</DBlock>
-        <DBlock>{website}</DBlock>
+        <DBlock href={`mailto:${email}`}>{email}</DBlock>
+        <DBlock href={`tel:${phone}`}>{phone}</DBlock>
+        <DBlock href={`http://${website}`}>{website}</DBlock>
       </ContactDiv>
       <NoMarginParagraph>{user.company.name}</NoMarginParagraph>
       <NoMarginParagraph>{user.company.catchPhrase}</NoMarginParagraph>
