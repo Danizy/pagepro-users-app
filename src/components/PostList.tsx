@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, ReactNode } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../store'
 import { getPosts } from '../actions/posts-actions'
@@ -27,6 +27,10 @@ const PostList: React.FC = () => {
     state => state.postsReducer.isLoading
   )
 
+  const loadingError = useSelector<RootState, boolean | undefined>(
+    state => state.postsReducer.error
+  )
+
   useEffect(() => {
     if (previousUserId && (previousUserId !== +userId || posts.length === 0))
       dispatch(getPosts(previousUserId))
@@ -36,7 +40,13 @@ const PostList: React.FC = () => {
     <PostListElement key={post.id} postTitle={post.title} postId={post.id} />
   ))
 
-  return <div>{postsLoading ? <LoadingIndicator /> : list}</div>
+  const view = (): ReactNode => {
+    if (loadingError) return 'Error loading posts'
+    if (postsLoading) return <LoadingIndicator />
+    return list
+  }
+
+  return <div>{view()}</div>
 }
 
 export default PostList

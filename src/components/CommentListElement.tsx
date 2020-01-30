@@ -18,7 +18,7 @@ const CommentTitle = styled.span`
   font-weight: bold;
 `
 
-const AuthorEmail = styled.span`
+const AuthorEmail = styled.a`
   margin-left: auto;
   color: ${mainTheme.secondaryColor};
   text-decoration: underline;
@@ -39,7 +39,7 @@ const CommentListElement: React.FC<CommentListElementProps> = ({
     <CommentListElementWrapper>
       <CommentHeader>
         <CommentTitle>{commentTitle}</CommentTitle>
-        <AuthorEmail>{authorEmail}</AuthorEmail>
+        <AuthorEmail href={`mailto:${authorEmail}`}>{authorEmail}</AuthorEmail>
       </CommentHeader>
       <p>{commentBody}</p>
     </CommentListElementWrapper>

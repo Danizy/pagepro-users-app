@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useRef, ReactNode } from 'react'
 import styled from 'styled-components'
 import { useParams, Redirect } from 'react-router-dom'
 import { getPost } from '../actions/posts-actions'
@@ -48,6 +48,10 @@ const PostDetails: React.FC = () => {
     state => state.postsReducer.selectedPost
   )
 
+  const postError = useSelector<RootState, boolean | null>(
+    state => state.postsReducer.postLoadingError
+  )
+
   const isPostDeleting = useSelector<RootState, number | null>(
     state => state.postsReducer.isDeletingPostId
   )
@@ -81,7 +85,7 @@ const PostDetails: React.FC = () => {
     </div>
   )
 
-  return (
+  const postView = (
     <div>
       {post && post.id === +postId ? postContainer : 'Loading'}
       <ButtonsContainer>
@@ -102,6 +106,13 @@ const PostDetails: React.FC = () => {
       {redirect && <Redirect to={`/users/${userId}`} />}
     </div>
   )
+
+  const view = (): ReactNode => {
+    if (postError) return 'No such post'
+    return postView
+  }
+
+  return <div>{view()}</div>
 }
 
 export default PostDetails

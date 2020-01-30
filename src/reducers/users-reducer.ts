@@ -37,7 +37,7 @@ const usersReducer = (
     case GET_USER_FAILED:
       return { ...state, isLoading: false, error: true }
     case GET_USER_FINISHED:
-      return { ...state, selectedUser: action.payload }
+      return { ...state, selectedUser: action.payload, isLoading: false }
     default:
       return state
   }

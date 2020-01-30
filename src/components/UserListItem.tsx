@@ -48,6 +48,9 @@ const StyledLink = styled(Link)`
   &:visited {
     color: black;
   }
+  &:link {
+    color: black;
+  }
   &:hover {
     cursor: pointer;
   }

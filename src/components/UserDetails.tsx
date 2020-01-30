@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, ReactNode } from 'react'
 import { useParams, useRouteMatch, Switch, Route } from 'react-router-dom'
 import UserHeader from './UserHeader'
 import { useDispatch, useSelector } from 'react-redux'
@@ -28,6 +28,14 @@ const UserDetails: React.FC = () => {
     state => state.usersReducer.selectedUser?.id
   )
 
+  const userLoading = useSelector<RootState, boolean | undefined>(
+    state => state.usersReducer.isLoading
+  )
+
+  const userLoadingError = useSelector<RootState, boolean | undefined>(
+    state => state.usersReducer.error
+  )
+
   const postId = useSelector<RootState, number | undefined>(
     state => state.postsReducer.selectedPost?.id
   )
@@ -47,7 +55,7 @@ const UserDetails: React.FC = () => {
     dispatch(addPost(postTitle, postBody))
   }
 
-  return (
+  const userLoaded = (
     <div>
       <UserHeader
         onAddClick={toggleShowModal}
@@ -76,6 +84,14 @@ const UserDetails: React.FC = () => {
       </div>
     </div>
   )
+
+  const view = (): ReactNode => {
+    if (userLoadingError) return 'No such user'
+    if (userLoading) return 'Loadinge'
+    return userLoaded
+  }
+
+  return <div>{view()}</div>
 }
 
 export default UserDetails

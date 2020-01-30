@@ -57,7 +57,7 @@ export const getUser = (
       const user = await fetchUser(userId)
       dispatch(getUserFinished(user))
     } catch (error) {
-      getUserFailed()
+      dispatch(getUserFailed())
     }
   }
 }
