@@ -18,6 +18,7 @@ const AddPostTitle = styled.h1`
 
 const StyledInput = styled.input`
   flex: 1;
+  height: 15px;
   border: ${mainTheme.border};
 `
 
